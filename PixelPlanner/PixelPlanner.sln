@@ -1,0 +1,60 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34408.163
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PixelPlanner.Entities", "PixelPlanner.Entities\PixelPlanner.Entities.csproj", "{4337B50E-702B-45A4-A8C5-1C5C92D6B17B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PixelPlanner.Entities.UnitTests", "PixelPlanner.Entities.UnitTests\PixelPlanner.Entities.UnitTests.csproj", "{E0456A3E-1120-48C7-9545-328D99EA5311}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{992E236A-FAE2-4663-968E-8FBC26DD1E4E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{42754D8B-06AF-4741-8897-BB9D4D48D5D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelPlanner.UseCases", "PixelPlanner.UseCases\PixelPlanner.UseCases.csproj", "{9A0205D5-5905-40D7-9E27-B0240D8CE85F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelPlanner.Persistence", "PixelPlanner.Persistence\PixelPlanner.Persistence.csproj", "{6B5FFDCF-1D1D-40EC-9829-CBD335C58FBB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelPlanner.Api", "PixelPlanner.Api\PixelPlanner.Api.csproj", "{72038925-3B75-442C-A58D-A819F09101B4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4337B50E-702B-45A4-A8C5-1C5C92D6B17B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4337B50E-702B-45A4-A8C5-1C5C92D6B17B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4337B50E-702B-45A4-A8C5-1C5C92D6B17B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4337B50E-702B-45A4-A8C5-1C5C92D6B17B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0456A3E-1120-48C7-9545-328D99EA5311}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0456A3E-1120-48C7-9545-328D99EA5311}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0456A3E-1120-48C7-9545-328D99EA5311}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0456A3E-1120-48C7-9545-328D99EA5311}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A0205D5-5905-40D7-9E27-B0240D8CE85F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A0205D5-5905-40D7-9E27-B0240D8CE85F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A0205D5-5905-40D7-9E27-B0240D8CE85F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A0205D5-5905-40D7-9E27-B0240D8CE85F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B5FFDCF-1D1D-40EC-9829-CBD335C58FBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B5FFDCF-1D1D-40EC-9829-CBD335C58FBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B5FFDCF-1D1D-40EC-9829-CBD335C58FBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B5FFDCF-1D1D-40EC-9829-CBD335C58FBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72038925-3B75-442C-A58D-A819F09101B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72038925-3B75-442C-A58D-A819F09101B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72038925-3B75-442C-A58D-A819F09101B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72038925-3B75-442C-A58D-A819F09101B4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4337B50E-702B-45A4-A8C5-1C5C92D6B17B} = {992E236A-FAE2-4663-968E-8FBC26DD1E4E}
+		{E0456A3E-1120-48C7-9545-328D99EA5311} = {42754D8B-06AF-4741-8897-BB9D4D48D5D9}
+		{9A0205D5-5905-40D7-9E27-B0240D8CE85F} = {992E236A-FAE2-4663-968E-8FBC26DD1E4E}
+		{6B5FFDCF-1D1D-40EC-9829-CBD335C58FBB} = {992E236A-FAE2-4663-968E-8FBC26DD1E4E}
+		{72038925-3B75-442C-A58D-A819F09101B4} = {992E236A-FAE2-4663-968E-8FBC26DD1E4E}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D2944026-F947-4148-86F4-B2EAA030058D}
+	EndGlobalSection
+EndGlobal

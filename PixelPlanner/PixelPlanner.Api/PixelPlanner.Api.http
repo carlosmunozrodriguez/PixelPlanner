@@ -1,0 +1,18 @@
+@PixelPlanner.Api_HostAddress = http://localhost:5220
+# @PixelPlanner.Api_HostAddress = https://localhost:7255
+
+GET {{PixelPlanner.Api_HostAddress}}/grids
+
+###
+
+GET {{PixelPlanner.Api_HostAddress}}/grids/9ead650f-bc37-40b5-8f80-1476ce69da8e
+
+###
+
+POST {{PixelPlanner.Api_HostAddress}}/grids
+Content-Type: application/json
+
+{
+  "Height": 10,
+  "Width": 10
+}
