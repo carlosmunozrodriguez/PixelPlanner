@@ -36,7 +36,7 @@ public class GridController(IGridService gridService) : ControllerBase
         return result switch
         {
             FailedResult<Guid> failedResult => Problem(failedResult.Error, statusCode: StatusCodes.Status400BadRequest),
-            SuccessfulResult<Guid> successfulResult => CreatedAtRoute("", new { successfulResult.Value }, null),
+            SuccessfulResult<Guid> successfulResult => CreatedAtAction(nameof(GetGrid), new { gridId = successfulResult.Value }, null),
             _ => throw new UnreachableException()
         };
     }
