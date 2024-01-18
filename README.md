@@ -10,6 +10,10 @@ docker compose up -d
 
 It should start two containers - one for the database and one for the web app. The root of the web app (although noting is served form there) will be available at [http://localhost:81](http://localhost:81). A swagger UI will be available at [http://localhost:81/swagger](http://localhost:81/swagger).
 
+## User Story
+
+The description of the User Story can be found at [Create /grids endpoints for managing grids with rectangles](https://github.com/carlosmunozrodriguez/PixelPlanner/issues/1)
+
 ## Architecture
 
 The application is following Clean Architecture guidelines and is split into 4 layers:
