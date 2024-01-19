@@ -43,9 +43,10 @@ public class GridTests
     {
         var grid = Create9X9EmptyGrid();
         var rectangle = Create3X3Rectangle();
-        var position = new GridCoordinates(x, y);
+        var positionResult = GridCoordinates.Create(x, y);
+        var successfulResult = Assert.IsType<SuccessfulResult<GridCoordinates>>(positionResult);
 
-        var result = grid.AddRectangle(rectangle, position);
+        var result = grid.AddRectangle(rectangle, successfulResult.Value);
 
         Assert.False(result.Success);
     }
@@ -64,9 +65,10 @@ public class GridTests
     {
         var grid = Create9X9EmptyGrid();
         var rectangle = Create3X3Rectangle();
-        var position = new GridCoordinates(x, y);
+        var positionResult = GridCoordinates.Create(x, y);
+        var successfulCreateResult = Assert.IsType<SuccessfulResult<GridCoordinates>>(positionResult);
 
-        var result = grid.AddRectangle(rectangle, position);
+        var result = grid.AddRectangle(rectangle, successfulCreateResult.Value);
 
         Assert.True(result.Success);
         var successfulResult = Assert.IsType<SuccessfulResult<Guid>>(result);
@@ -144,9 +146,10 @@ public class GridTests
     {
         var grid = Create17X17GridWith5X5Rectangle();
         var rectangle = Create3X3Rectangle();
-        var position = new GridCoordinates(x, y);
+        var positionResult = GridCoordinates.Create(x, y);
+        var successfulCreateResult = Assert.IsType<SuccessfulResult<GridCoordinates>>(positionResult);
 
-        var result = grid.AddRectangle(rectangle, position);
+        var result = grid.AddRectangle(rectangle, successfulCreateResult.Value);
 
         Assert.True(result.Success);
         var successfulResult = Assert.IsType<SuccessfulResult<Guid>>(result);
@@ -188,9 +191,10 @@ public class GridTests
     {
         var grid = Create17X17GridWith5X5Rectangle();
         var rectangle = Create3X3Rectangle();
-        var position = new GridCoordinates(x, y);
+        var positionResult = GridCoordinates.Create(x, y);
+        var successfulCreateResult = Assert.IsType<SuccessfulResult<GridCoordinates>>(positionResult);
 
-        var result = grid.AddRectangle(rectangle, position);
+        var result = grid.AddRectangle(rectangle, successfulCreateResult.Value);
 
         Assert.False(result.Success);
     }
@@ -210,8 +214,9 @@ public class GridTests
     {
         var grid = Create9X9EmptyGrid();
         var rectangle = Create3X3Rectangle();
-        var position = new GridCoordinates(3, 3);
-        var addResult = grid.AddRectangle(rectangle, position);
+        var positionResult = GridCoordinates.Create(3, 3);
+        var successfulCreateResult = Assert.IsType<SuccessfulResult<GridCoordinates>>(positionResult);
+        var addResult = grid.AddRectangle(rectangle, successfulCreateResult.Value);
         var successfulResult = Assert.IsType<SuccessfulResult<Guid>>(addResult);
         var newRectangleId = successfulResult.Value;
 
@@ -225,8 +230,9 @@ public class GridTests
     {
         var grid = Create9X9EmptyGrid();
         var rectangle = Create3X3Rectangle();
-        var position = new GridCoordinates(3, 3);
-        grid.AddRectangle(rectangle, position);
+        var positionResult = GridCoordinates.Create(3, 3);
+        var successfulCreateResult = Assert.IsType<SuccessfulResult<GridCoordinates>>(positionResult);
+        grid.AddRectangle(rectangle, successfulCreateResult.Value);
 
         var result = grid.RemoveRectangle(Guid.NewGuid());
 
@@ -238,9 +244,12 @@ public class GridTests
     private static Grid Create17X17GridWith5X5Rectangle()
     {
         var grid = ((SuccessfulResult<Grid>)Grid.CreateGrid(17, 17)).Value;
-        grid.AddRectangle(new Rectangle(5, 5), new GridCoordinates(6, 6));
+        var rectangle = ((SuccessfulResult<Rectangle>)Rectangle.Create(5, 5)).Value;
+        var position = ((SuccessfulResult<GridCoordinates>)GridCoordinates.Create(6, 6)).Value;
+        grid.AddRectangle(rectangle, position);
         return grid;
     }
 
-    private static Rectangle Create3X3Rectangle() => new(3, 3);
+    private static Rectangle Create3X3Rectangle() => ((SuccessfulResult<Rectangle>)Rectangle.Create(3, 3)).Value;
+
 }

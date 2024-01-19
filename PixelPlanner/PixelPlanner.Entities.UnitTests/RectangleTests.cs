@@ -11,16 +11,19 @@ public class RectangleTests
     [InlineData(ValidLength, NegativeLength)]
     [InlineData(ValidLength, ZeroLength)]
     [Theory]
-    public void Given_InvalidLengths_When_CallingConstructor_Then_ThrowsArgumentOutOfRangeException(int width, int height)
+    public void Given_InvalidLengths_When_CreatingRectangle_Then_FailsToCreate(int width, int height)
     {
-        Assert.Throws<ArgumentOutOfRangeException>(() => new Rectangle(width, height));
+        var squareResult = Rectangle.Create(width, height);
+
+        Assert.IsType<FailedResult<Rectangle>>(squareResult);
     }
 
     [Fact]
-    public void Given_ValidLengths_When_CallingConstructor_Then_ReturnsRectangle()
+    public void Given_ValidLengths_When_CreatingRectangle_Then_ReturnsRectangle()
     {
-        var square = new Rectangle(ValidLength, ValidLength);
+        var squareResult = Rectangle.Create(ValidLength, ValidLength);
 
+        var square = Assert.IsType<SuccessfulResult<Rectangle>>(squareResult);
         Assert.NotNull(square);
     }
 }

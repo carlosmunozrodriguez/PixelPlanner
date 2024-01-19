@@ -6,20 +6,25 @@ public record Rectangle
 
     public int Height { get; }
 
-    public Rectangle(int width, int height)
+    private Rectangle(int width, int height)
+    {
+        Width = width;
+        Height = height;
+    }
+
+    public static Result<Rectangle> Create(int width, int height)
     {
         if (!ValidLength(width))
         {
-            throw new ArgumentOutOfRangeException(nameof(width), width, ErrorMessages.InvalidWidth);
+            return Result<Rectangle>.Failed(ErrorMessages.InvalidWidth);
         }
 
         if (!ValidLength(height))
         {
-            throw new ArgumentOutOfRangeException(nameof(height), height, ErrorMessages.InvalidHeight);
+            return Result<Rectangle>.Failed(ErrorMessages.InvalidHeight);
         }
 
-        Width = width;
-        Height = height;
+        return Result<Rectangle>.Successful(new Rectangle(width, height));
     }
 
     private static bool ValidLength(int x) => x > 0;

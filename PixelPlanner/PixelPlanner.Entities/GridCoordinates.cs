@@ -6,20 +6,25 @@ public record GridCoordinates
 
     public int Y { get; }
 
-    public GridCoordinates(int x, int y)
+    private GridCoordinates(int x, int y)
+    {
+        X = x;
+        Y = y;
+    }
+
+    public static Result<GridCoordinates> Create(int x, int y)
     {
         if (!ValidPosition(x))
         {
-            throw new ArgumentOutOfRangeException(nameof(x), x, ErrorMessages.InvalidX);
+            return new FailedResult<GridCoordinates>(ErrorMessages.InvalidX);
         }
 
         if (!ValidPosition(y))
         {
-            throw new ArgumentOutOfRangeException(nameof(y), y, ErrorMessages.InvalidY);
+            return new FailedResult<GridCoordinates>(ErrorMessages.InvalidY);
         }
 
-        X = x;
-        Y = y;
+        return Result<GridCoordinates>.Successful(new GridCoordinates(x, y));
     }
 
     private static bool ValidPosition(int p) => p >= 0;
