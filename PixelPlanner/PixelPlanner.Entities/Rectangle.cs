@@ -12,19 +12,19 @@ public record Rectangle
         Height = height;
     }
 
-    public static Result<Rectangle> Create(int width, int height)
+    public static Result Create(int width, int height)
     {
         if (!ValidLength(width))
         {
-            return Result<Rectangle>.Failed(ErrorMessages.InvalidWidth);
+            return Result.Failed(ErrorMessages.InvalidWidth);
         }
 
         if (!ValidLength(height))
         {
-            return Result<Rectangle>.Failed(ErrorMessages.InvalidHeight);
+            return Result.Failed(ErrorMessages.InvalidHeight);
         }
 
-        return Result<Rectangle>.Successful(new Rectangle(width, height));
+        return Result.Successful(new Rectangle(width, height));
     }
 
     private static bool ValidLength(int x) => x > 0;

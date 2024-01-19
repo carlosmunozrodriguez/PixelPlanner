@@ -15,7 +15,7 @@ public class RectangleTests
     {
         var squareResult = Rectangle.Create(width, height);
 
-        Assert.IsType<FailedResult<Rectangle>>(squareResult);
+        Assert.IsType<FailedResult>(squareResult);
     }
 
     [Fact]

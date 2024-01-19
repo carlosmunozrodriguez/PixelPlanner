@@ -19,27 +19,27 @@ public class Grid
         Height = height;
     }
 
-    public static Result<Grid> CreateGrid(int width, int height)
+    public static Result CreateGrid(int width, int height)
     {
         if (!IsValidLength(width))
         {
-            return new FailedResult<Grid>(ErrorMessages.InvalidWidth);
+            return Result.Failed(ErrorMessages.InvalidWidth);
         }
 
         if (!IsValidLength(height))
         {
-            return new FailedResult<Grid>(ErrorMessages.InvalidHeight);
+            return Result.Failed(ErrorMessages.InvalidHeight);
         }
 
-        return new SuccessfulResult<Grid>(new Grid(width, height));
+        return Result.Successful(new Grid(width, height));
     }
 
-    public Result<Guid> AddRectangle(Rectangle rectangle, GridCoordinates position)
+    public Result AddRectangle(Rectangle rectangle, GridCoordinates position)
     {
         var valid = ValidatePositionInsideGrid(position, rectangle);
         if (!valid)
         {
-            return Result<Guid>.Failed(ErrorMessages.OutsideOfGrid);
+            return Result.Failed(ErrorMessages.OutsideOfGrid);
         }
 
         var candidatePositionedRectangle = new PositionedRectangle(rectangle, position);
@@ -47,24 +47,24 @@ public class Grid
         valid = ValidateRectangleDoesNotOverlap(candidatePositionedRectangle);
         if (!valid)
         {
-            return Result<Guid>.Failed(ErrorMessages.OverlappingRectangle);
+            return Result.Failed(ErrorMessages.OverlappingRectangle);
         }
 
         _rectanglesInGrid.Add(candidatePositionedRectangle);
-        return Result<Guid>.Successful(candidatePositionedRectangle.Id);
+        return Result.Successful(candidatePositionedRectangle.Id);
     }
 
-    public Result<Void> RemoveRectangle(Guid rectangleId)
+    public Result RemoveRectangle(Guid rectangleId)
     {
         var rectangleIndex = _rectanglesInGrid.FindIndex(x => x.Id == rectangleId);
 
         if (rectangleIndex == -1)
         {
-            return new FailedResult<Void>(ErrorMessages.NotFound(rectangleId));
+            return Result.Failed(ErrorMessages.NotFound(rectangleId));
         }
 
         _rectanglesInGrid.RemoveAt(rectangleIndex);
-        return Result<Void>.Successful(Void.Nothing);
+        return Result.Successful(Void.Nothing);
     }
 
     private static bool IsValidLength(int x) => x > 0;

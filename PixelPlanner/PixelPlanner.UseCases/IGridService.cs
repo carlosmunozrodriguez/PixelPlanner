@@ -1,5 +1,4 @@
 ﻿using PixelPlanner.Entities;
-using Void = PixelPlanner.Entities.Void;
 
 namespace PixelPlanner.UseCases;
 
@@ -9,11 +8,11 @@ public interface IGridService
 
     public Task<Grid?> GetGridByIdAsync(Guid gridId);
 
-    public Task<Result<Guid>> CreateGridAsync(int width, int height);
+    public Task<Result> CreateGridAsync(int width, int height);
 
-    public Task<Result<Void>> DeleteGridAsync(Guid gridId);
+    public Task<Result> DeleteGridAsync(Guid gridId);
 
-    public Task<Result<Guid>> AddRectangleToGridAsync(Guid gridId, Rectangle rectangle, GridCoordinates position);
+    public Task<Result> AddRectangleToGridAsync(Guid gridId, Rectangle rectangle, GridCoordinates position);
 
-    public Task<Result<Void>> RemoveRectangleFromGridAsync(Guid gridId, Guid positionedRectangleId);
+    public Task<Result> RemoveRectangleFromGridAsync(Guid gridId, Guid positionedRectangleId);
 }

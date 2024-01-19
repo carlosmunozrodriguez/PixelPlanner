@@ -12,19 +12,19 @@ public record GridCoordinates
         Y = y;
     }
 
-    public static Result<GridCoordinates> Create(int x, int y)
+    public static Result Create(int x, int y)
     {
         if (!ValidPosition(x))
         {
-            return new FailedResult<GridCoordinates>(ErrorMessages.InvalidX);
+            return Result.Failed(ErrorMessages.InvalidX);
         }
 
         if (!ValidPosition(y))
         {
-            return new FailedResult<GridCoordinates>(ErrorMessages.InvalidY);
+            return Result.Failed(ErrorMessages.InvalidY);
         }
 
-        return Result<GridCoordinates>.Successful(new GridCoordinates(x, y));
+        return Result.Successful(new GridCoordinates(x, y));
     }
 
     private static bool ValidPosition(int p) => p >= 0;

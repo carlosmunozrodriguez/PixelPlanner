@@ -16,7 +16,7 @@ public class GridTests
         var result = Grid.CreateGrid(width, height);
 
         Assert.False(result.Success);
-        Assert.IsType<FailedResult<Grid>>(result);
+        Assert.IsType<FailedResult>(result);
     }
 
     [Fact]

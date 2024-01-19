@@ -1,5 +1,4 @@
 ﻿using PixelPlanner.Entities;
-using System.Diagnostics;
 using Void = PixelPlanner.Entities.Void;
 
 namespace PixelPlanner.UseCases;
@@ -10,42 +9,41 @@ public class GridService(IGridRepository gridRepository) : IGridService
 
     public Task<Grid?> GetGridByIdAsync(Guid gridId) => gridRepository.GetGridByIdAsync(gridId);
 
-    public async Task<Result<Guid>> CreateGridAsync(int width, int height)
+    public async Task<Result> CreateGridAsync(int width, int height)
     {
-        var createResult = Grid.CreateGrid(width, height);
+        var result = Grid.CreateGrid(width, height);
 
-        switch (createResult)
+        if (result is not SuccessfulResult<Grid> successfulResult)
         {
-            case SuccessfulResult<Grid> successfulResult:
-                await gridRepository.CreateGridAsync(successfulResult.Value);
-                return Result<Guid>.Successful(successfulResult.Value.Id);
-            case FailedResult<Grid> failedResult:
-                return Result<Guid>.Failed(failedResult.Error);
-            default: throw new UnreachableException();
+            return result;
         }
+
+        await gridRepository.CreateGridAsync(successfulResult.Value);
+        return Result.Successful(successfulResult.Value.Id);
+
     }
 
-    public async Task<Result<Void>> DeleteGridAsync(Guid gridId)
+    public async Task<Result> DeleteGridAsync(Guid gridId)
     {
         var grid = await gridRepository.GetGridByIdAsync(gridId);
 
         if (grid is null)
         {
-            return Result<Void>.Failed(ErrorMessages.GridNotFound);
+            return Result.Failed(ErrorMessages.GridNotFound);
         }
 
         await gridRepository.DeleteGridAsync(gridId);
 
-        return Result<Void>.Successful(Void.Nothing);
+        return Result.Successful(Void.Nothing);
     }
 
-    public async Task<Result<Guid>> AddRectangleToGridAsync(Guid gridId, Rectangle rectangle, GridCoordinates position)
+    public async Task<Result> AddRectangleToGridAsync(Guid gridId, Rectangle rectangle, GridCoordinates position)
     {
         var grid = await gridRepository.GetGridByIdAsync(gridId);
 
         if (grid is null)
         {
-            return Result<Guid>.Failed(ErrorMessages.GridNotFound);
+            return Result.Failed(ErrorMessages.GridNotFound);
         }
 
         var result = grid.AddRectangle(rectangle, position);
@@ -57,13 +55,13 @@ public class GridService(IGridRepository gridRepository) : IGridService
         return result;
     }
 
-    public async Task<Result<Void>> RemoveRectangleFromGridAsync(Guid gridId, Guid positionedRectangleId)
+    public async Task<Result> RemoveRectangleFromGridAsync(Guid gridId, Guid positionedRectangleId)
     {
         var grid = await gridRepository.GetGridByIdAsync(gridId);
 
         if (grid is null)
         {
-            return Result<Void>.Failed(ErrorMessages.GridNotFound);
+            return Result.Failed(ErrorMessages.GridNotFound);
         }
 
         var result = grid.RemoveRectangle(positionedRectangleId);

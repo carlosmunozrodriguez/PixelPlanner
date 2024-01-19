@@ -1,15 +1,15 @@
 ﻿namespace PixelPlanner.Entities;
 
-public abstract record Result<T>
+public abstract record Result
 {
     public bool Success { get; protected init; }
 
-    public static SuccessfulResult<T> Successful(T value) => new(value);
+    public static SuccessfulResult<T> Successful<T>(T value) => new(value);
 
-    public static FailedResult<T> Failed(string error) => new(error);
+    public static FailedResult Failed(string error) => new(error);
 }
 
-public record SuccessfulResult<T> : Result<T>
+public record SuccessfulResult<T> : Result
 {
     public T Value { get; }
 
@@ -20,7 +20,7 @@ public record SuccessfulResult<T> : Result<T>
     }
 }
 
-public record FailedResult<T> : Result<T>
+public record FailedResult : Result
 {
     public string Error { get; }
 
