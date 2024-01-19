@@ -60,14 +60,22 @@ public class GridController(IGridService gridService) : ControllerBase
     [ProducesResponseType<ProblemDetails>(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<AddRectangleToGridResponse>> AddRectangleToGrid(Guid gridId, AddRectangleToGridRequest request)
     {
-        var result = await gridService.AddRectangleToGridAsync(gridId, request.Width, request.Height, request.X, request.Y);
+        var requestResult = request.ToDomain();
 
-        return result switch
+        switch (requestResult)
         {
-            FailedResult<Guid> failedResult => Problem(failedResult.Error, statusCode: StatusCodes.Status400BadRequest),
-            SuccessfulResult<Guid> successfulResult => new AddRectangleToGridResponse(successfulResult.Value),
-            _ => throw new UnreachableException()
-        };
+            case FailedResult<(Rectangle, GridCoordinates)> failedRequestResult: return Problem(failedRequestResult.Error, statusCode: StatusCodes.Status400BadRequest);
+            case SuccessfulResult<(Rectangle Rectangle, GridCoordinates Position)> successfulRequestResult:
+                var result = await gridService.AddRectangleToGridAsync(gridId, successfulRequestResult.Value.Rectangle, successfulRequestResult.Value.Position);
+
+                return result switch
+                {
+                    FailedResult<Guid> failedResult => Problem(failedResult.Error, statusCode: StatusCodes.Status400BadRequest),
+                    SuccessfulResult<Guid> successfulResult => new AddRectangleToGridResponse(successfulResult.Value),
+                    _ => throw new UnreachableException()
+                };
+            default: throw new UnreachableException();
+        }
     }
 
     [HttpDelete("{gridId:guid}/rectangles/{rectangleId:guid}", Name = nameof(RemoveRectangleFromGrid))]

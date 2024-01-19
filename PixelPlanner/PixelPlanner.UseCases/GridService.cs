@@ -39,7 +39,7 @@ public class GridService(IGridRepository gridRepository) : IGridService
         return Result<Void>.Successful(Void.Nothing);
     }
 
-    public async Task<Result<Guid>> AddRectangleToGridAsync(Guid gridId, int width, int height, int x, int y)
+    public async Task<Result<Guid>> AddRectangleToGridAsync(Guid gridId, Rectangle rectangle, GridCoordinates position)
     {
         var grid = await gridRepository.GetGridByIdAsync(gridId);
 
@@ -48,30 +48,13 @@ public class GridService(IGridRepository gridRepository) : IGridService
             return Result<Guid>.Failed(ErrorMessages.GridNotFound);
         }
 
-        var rectangleResult = Rectangle.Create(width, height);
-        switch (rectangleResult)
+        var result = grid.AddRectangle(rectangle, position);
+        if (result is SuccessfulResult<Guid> successfulAddRectangleResult)
         {
-            case FailedResult<Rectangle> failedResult: return Result<Guid>.Failed(failedResult.Error);
-            case SuccessfulResult<Rectangle> successfulRectangleResult:
-                var positionResult = GridCoordinates.Create(x, y);
-
-                switch (positionResult)
-                {
-                    case FailedResult<GridCoordinates> failedResult: return Result<Guid>.Failed(failedResult.Error);
-                    case SuccessfulResult<GridCoordinates> successfulPositionResult:
-                        var position = successfulPositionResult.Value;
-                        var rectangle = successfulRectangleResult.Value;
-                        var result = grid.AddRectangle(rectangle, position);
-                        if (result is SuccessfulResult<Guid> successfulAddRectangleResult)
-                        {
-                            await gridRepository.AddRectangleToGridAsync(gridId, rectangle, position, successfulAddRectangleResult.Value);
-                        }
-
-                        return result;
-                    default: throw new UnreachableException();
-                }
-            default: throw new UnreachableException();
+            await gridRepository.AddRectangleToGridAsync(gridId, rectangle, position, successfulAddRectangleResult.Value);
         }
+
+        return result;
     }
 
     public async Task<Result<Void>> RemoveRectangleFromGridAsync(Guid gridId, Guid positionedRectangleId)

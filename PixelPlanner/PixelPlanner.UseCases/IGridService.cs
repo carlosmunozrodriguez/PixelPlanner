@@ -13,7 +13,7 @@ public interface IGridService
 
     public Task<Result<Void>> DeleteGridAsync(Guid gridId);
 
-    public Task<Result<Guid>> AddRectangleToGridAsync(Guid gridId, int width, int height, int x, int y);
+    public Task<Result<Guid>> AddRectangleToGridAsync(Guid gridId, Rectangle rectangle, GridCoordinates position);
 
     public Task<Result<Void>> RemoveRectangleFromGridAsync(Guid gridId, Guid positionedRectangleId);
 }
